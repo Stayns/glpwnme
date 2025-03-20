@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "glpwnme"
+version = "0.4.0"
+description = "Tool to exploit non up-to-date GLPI"
+authors = ["Guilhem Rioux <guilhem.rioux@orangecyberdefense.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+beautifulsoup4 = "^4.12.3"
+bs4 = "^0.0.2"
+certifi = "^2024.8.30"
+charset-normalizer = "^3.4.0"
+idna = "^3.10"
+markdown-it-py = "^3.0.0"
+mdurl = "^0.1.2"
+packaging = "^24.2"
+pygments = "^2.18.0"
+requests = "^2.32.3"
+rich = "^13.9.4"
+soupsieve = "^2.6"
+urllib3 = "^2.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+glpwnme = "glpwnme:run_cli"
