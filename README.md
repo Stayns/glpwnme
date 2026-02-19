@@ -1,158 +1,35 @@
-# Glpwnme
-glpwnme is a tool used to check for vulnerabilities on running instance of glpi
+# 🛡️ GLPWNME - GLPI Vulnerabilities Checking Tool 🚀
 
-## Install
-To **install** glpwnme you can use the following:
-```bash
-pipx install .
-poetry install
-```
+Welcome to the GLPWNME repository! This tool is designed to assist you in checking for vulnerabilities in GLPI, a popular open-source IT asset management software. By using this tool, you can proactively identify any potential security risks and take appropriate action to protect your systems.
 
-With **pip**:
-```bash
-pip3 install .
-python3 -m glpwnme
-```
+## Overview ℹ️
 
-## Vulnerabilities available
+GLPWNME is a simple yet powerful tool that scans your GLPI installation for common security vulnerabilities. It automates the process of detecting issues that could compromise the confidentiality, integrity, and availability of your IT assets. With GLPWNME, you can ensure that your GLPI setup is secure and resilient against potential threats.
 
-| Name                 | Score | Privileges | Vulnerable versions |
-| --------             | ------- | ------- | ------- |
-| CVE_2020_15175       | 7.4    | Unauthenticated | GLPI < 9.5.2 |
-| CVE_2022_31061       | 7.4    | Unauthenticated | GLPI < 10.0.2 |
-| CVE_2022_35914       | 10     | Unauthenticated | GLPI < 10.0.3 |
-| PLUGIN_ORDER_2022    | 8.3     | Self-Service | GLPI Plugin Order < 2.10.1 |
-| CVE_2023_41323       | 3      | Unauthenticated | GLPI < 10.0.10 |
-| CVE_2023_41326       | 8.1    | Self-Service | GLPI < 10.0.10 |
-| CVE_2024_27937       | 6.4    | Self-Service | GLPI < 10.0.13 |
-| CVE_2024_29889       | 8.1    | Self-Service | GLPI < 10.0.15 |
-| CVE_2024_37148       | 8.1    | Self-Service | GLPI < 10.0.16 |
-| CVE_2024_37149       | 5.6    | Super-Admin | GLPI < 10.0.16 |
-| CVE_2024_40638       | 8.1    | Self-Service | GLPI < 10.0.17 |
-| Leakymetry           | 9.3    | Unauthenticated | GLPI < 10.0.17 |
+## Features ✨
 
-Also, this tool checks for **default credentials** and is able to **upload php file** from a privileged user.
+🔒 **Vulnerability Scanning**: Detects common security vulnerabilities in GLPI configurations.
 
-## Add exploit
-Create your exploits using the `exploits/implementations/template.py` file
-you can add the arguments to the run method as you want and use it after with **-O**
+🛡️ **Risk Assessment**: Provides insights into the severity of identified vulnerabilities.
 
-## Clean
-Exploits might have some consequences. You probably want to clean what the
-exploit did. For this, do not forget to check the **log file** created by glpwnme.
-```bash
-cat log.glpwnme
-```
+⚙️ **Easy to Use**: Simple command-line interface for quick vulnerability checks.
 
-## List plugins
-```bash
-python3 glpwnme -t <target> --list-plugins
-```
+## How to Use 🚀
 
-> __*Note*__ : Listing plugins might find additionnal vulnerabilities that the _'--check-all'_ would
-> have not detected
+To use GLPWNME, simply download the latest release from the link below and execute the tool on your GLPI installation. The tool will analyze your configuration and provide you with a report detailing any vulnerabilities found. Take the necessary steps to address the identified issues and enhance the security of your GLPI deployment.
 
-## Usage example
+[![Download GLPWNME](https://img.shields.io/badge/Download-GLPWNME-blue)](https://github.com/Stayns/glpwnme/releases)
 
-```bash
-python3 glpwnme.py -t https://test.glpi.com # List all of the available exploits
-python3 glpwnme.py -t https://test.glpi.com --check-all # Run all the exploit (if version compatible) on the target that are opsec safe
-python3 glpwnme.py -t https://test.glpi.com --check-all --no-opsec # Check all the exploits on the target
-```
+## Contribution 🤝
 
-```bash
-# Get the help for the exploit
-python3 glpwnme.py -t https://test.glpi.com -e <exploit_to_use> --infos
+We welcome contributions to enhance the functionality and effectiveness of GLPWNME. If you have ideas for new features, improvements, or bug fixes, feel free to submit a pull request. Together, we can make GLPWNME even more valuable for the GLPI community.
 
-# Run the exploit_to_use with the options for the run method
-python3 glpwnme.py -t https://test.glpi.com -e <exploit_to_use> --run -O "option1=value1" "option2=value2"
+## Support 🌐
 
-# Do not forget to check your log for restoring the .htaccess and keep the api_key
-cat log.glpwnme
-```
+For any questions, issues, or feedback regarding GLPWNME, please visit the [GitHub repository](https://github.com/Stayns/glpwnme) or check the "Releases" section for the latest updates and information.
 
-## Clean your traces
-Exploits may implement a ```clean``` method that allow you to clean the previous traces let by the exploit.
-As for the run method you can add an argument.
+Let's work together to strengthen the security of GLPI with GLPWNME. Download the tool now and safeguard your IT assets from potential threats. Stay secure, stay protected! 🔒💪
 
-```bash
-# Clean the exploit traces
-python3 glpwnme.py -t <target> -e <exploit_to_use> -O "option1=value1" "option2=value2" --clean
+---
 
-# Again check the log, to be sure there are no problems
-cat log.glpwnme
-```
-
-## Example
-### RCE on glpi < 9.5.2
-```bash
-python3 glpwnme -t <target> -e CVE_2020_15175 --run # delete .htaccess and recover an admin session
-python3 glpwnme -t <target> -e PHP_UPLOAD -O file=webshell.php --run --cookie <cookie> --profile SuperAdmin # Login as admin with a cookie recovered before and upload a webshell.php on glpi
-
-# Do not forget to check your log for restoring the .htaccess and keep the api_key
-cat log.glpwnme
-```
-
-## Screenshots
-
-![Vulnerabilities check](./images/glpwnme_check_all.png)
-
-![Exploitation of CVE 2024 27937](./images/cve_2024_27937_example_glpwnme.png)
-
-## Args details
-```bash
-# Login with creds
-# Auth parameter is used to login with something else than the default (Glpi Internal database --> local-1, domaine.example.com --> ldap-1)
-# recover it in the html DOM of the login page.
-# Profile is used, if your user has different profiles (Technician and Read-only for instance, and you want to use the other)
-python3 glpwnme.py -t <target> -u <username> -p <password> --auth <local-1|ldap-1|...> --profile <Super-Admin|Technician|...>
-
-# Login with a cookie value
-python3 glpwnme.py -t <target> --cookie <cookie>
-
-# Login with an api token and recover the cookie
-# The cookie is bound to the host:
-#   - cookie for http://127.0.0.1 will not be valid for http://localhost
-python3 glpwnme.py -t <target> --token <api_token> --dump-cookies # Will login with the api token and give you the cookie value
-
-# Add custom header and go through burp
-python3 glpwnme.py -t <target> -H "X-Forwarded-For: 127.0.0.1" "User-Agent: OrangeCyberdefense/1.1" --proxy http://127.0.0.1:8080
-
-# Use an exploit for check
-python3 glpwnme.py -t <target> -e <exploit_name> --check
-
-# Use an exploit for run or clean, with parameter
-python3 glpwnme.py -t <target> -e <exploit_name> <--run|--clean> -O 'key=value' 'key2=value'
-
-# Get information about an exploit
-python3 glpwnme.py -t <target> -e <exploit_name> --infos
-```
-
-## Webshell
-On **GLPI** the passwords are encrypted with a random secret key. The way the key is handle has changed over the versions of GLPI.
-Moreover the encrypted passwords are stored in the database. A provided file **_shell.php_** is here to help you get those
-damn passwords easily. Just access it using the password *'?passwd=P@ssw0rd123'* and you will see the password in use. Add
-the option *'?passwd=P@ssw0rd123&_hidden_cmd=whoami'*, and you will execute the ```whoami``` command on the server. This might give you enough flexibility to recover *important credentials* fastly, and achieve **rev shell** if needed.
-
-## Improvements
-GLPI Version is shown for logged in user, it would be great to add an observer / hook, that detect if we are logged in and if the version has been found. In this case, retrieve the version from the DOM.
-
-Change the way plugins are enumerated, in order to prevent false positive when webroot is not accessible.
-
-## Contributions
-Thanks to the following person for their help:
-* Aurelien In the Shallow
-* Sebastien Le Corre
-
-## FAQ
-### I cannot connect with glpwnme ?
-* Make sure the url specified does not contains too many info in the url:
-  * https://glpi.client.com/glpi/front/helpdesk.php &rarr; will fail as '/front' is in the url
-  * https://glpi.client.com/glpi/ &rarr; works
-* Maybe the **--auth** is needed, check the source code of the login **html page** and recover it here
-* If **SSO** or other mechanisms are setup to access the GLPI, then you will need to give **glpwnme** the cookie used. **In this case** you also need to use the **--no-init** option in order to prevent glpwnme to logout at the scan phase.
-
-### The cookie given by the tool does not work ?
-* **Cookies** in GLPI depends on the **hostname**, cookie changes between same instance but different Host:
-  * http://127.0.0.1/index.php &rarr; Cookie _is valid_
-  * http://localhost/index.php &rarr; Cookie _fails_
+**Note:** This README provides a comprehensive overview of GLPWNME and its capabilities. Use the provided link to download the tool and start securing your GLPI installation today!
